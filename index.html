@@ -24,19 +24,15 @@
     <script>
         // Function to check if a date is a US holiday
         function isHoliday(date) {
-            // Define US holidays
             var holidays = [
-                new Date(date.getFullYear(), 0, 1),  // New Year's Day
-                new Date(date.getFullYear(), 6, 4),  // Independence Day
-                new Date(date.getFullYear(), 11, 25) // Christmas Day
+                '01-01',  // New Year's Day
+                '07-04',  // Independence Day
+                '12-25'   // Christmas Day
                 // Add more holidays here if needed
             ];
-
-            // Check if the date is a holiday
-            return holidays.some(holiday => 
-                date.getDate() == holiday.getDate() &&
-                date.getMonth() == holiday.getMonth()
-            );
+            var currentYear = date.getFullYear();
+            var formattedDate = ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+            return holidays.includes(formattedDate);
         }
 
         // Initialize datetimepicker with custom settings
