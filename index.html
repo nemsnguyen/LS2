@@ -10,26 +10,48 @@
 <body>
     <div style="max-width: 600px; margin: 0 auto;">
         <h1>Book an Appointment</h1>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoTFrc4CNJnT9QjJT_viexHQLYcFEpFJG-2TMKjoSW33DTgw/viewform?embedded=true" 
-             
-                width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <!-- Google Form -->
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoTFrc4CNJnT9QjJT_viexHQLYcFEpFJG-2TMKjoSW33DTgw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <input id="datepicker" type="text" placeholder="Select a date" />
     </div>
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Include the datetimepicker library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    
+    <!-- Custom JavaScript -->
     <script>
+        // Function to check if a date is a US holiday
+        function isHoliday(date) {
+            // Define US holidays
+            var holidays = [
+                new Date(date.getFullYear(), 0, 1),  // New Year's Day
+                new Date(date.getFullYear(), 6, 4),  // Independence Day
+                new Date(date.getFullYear(), 11, 25) // Christmas Day
+                // Add more holidays here if needed
+            ];
+
+            // Check if the date is a holiday
+            return holidays.some(holiday => 
+                date.getDate() == holiday.getDate() &&
+                date.getMonth() == holiday.getMonth()
+            );
+        }
+
+        // Initialize datetimepicker with custom settings
         $(function(){
-            // Initialize datetimepicker
             $('#datepicker').datetimepicker({
                 timepicker: false,
                 format: 'Y-m-d',
                 minDate: 0, // Set minimum date to today
                 beforeShowDay: function(date) {
                     var day = date.getDay();
-                    // Disable Tuesday, Thursday, Saturday, Sunday
-                    return [(day != 2 && day != 4 && day != 6 && day != 0)];
+                    // Disable Tuesday (2), Thursday (4), Saturday (6), Sunday (0) and US holidays
+                    if (day == 2 || day == 4 || day == 6 || day == 0 || isHoliday(date)) {
+                        return [false, "", "Unavailable"];
+                    }
+                    return [true, "", "Available"];
                 }
             });
         });
