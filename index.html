@@ -12,7 +12,10 @@
         <h1>Book an Appointment</h1>
         <!-- Google Form -->
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoTFrc4CNJnT9QjJT_viexHQLYcFEpFJG-2TMKjoSW33DTgw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-        <input id="datepicker" type="text" placeholder="Select a date" />
+
+        <!-- Datepicker Input -->
+        <label for="datepicker">Select a date:</label>
+        <input id="datepicker" name="booking-date" type="text" placeholder="Select a date" />
     </div>
 
     <!-- Include jQuery -->
@@ -28,9 +31,7 @@
                 '01-01',  // New Year's Day
                 '07-04',  // Independence Day
                 '12-25'   // Christmas Day
-                // Add more holidays here if needed
             ];
-            var currentYear = date.getFullYear();
             var formattedDate = ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
             return holidays.includes(formattedDate);
         }
@@ -40,10 +41,9 @@
             $('#datepicker').datetimepicker({
                 timepicker: false,
                 format: 'Y-m-d',
-                minDate: 0, // Set minimum date to today
+                minDate: 0,
                 beforeShowDay: function(date) {
                     var day = date.getDay();
-                    // Disable Tuesday (2), Thursday (4), Saturday (6), Sunday (0) and US holidays
                     if (day == 2 || day == 4 || day == 6 || day == 0 || isHoliday(date)) {
                         return [false, "", "Unavailable"];
                     }
