@@ -1,1 +1,35 @@
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoTFrc4CNJnT9QjJT_viexHQLYcFEpFJG-2TMKjoSW33DTgw/viewform?embedded=true" width="640" height="1309" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            var holidays = ["2024-07-04", "2024-12-25"]; // Thêm các ngày lễ vào đây
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                beforeShowDay: function(date) {
+                    var day = date.getDay();
+                    var formattedDate = $.datepicker.formatDate("yy-mm-dd", date);
+                    // Disable Sundays (0), Tuesdays (2), Thursdays (4), Saturdays (6), and holidays
+                    if (day === 0 || day === 2 || day === 4 || day === 6 || holidays.includes(formattedDate)) {
+                        return [false, "", "Unavailable"];
+                    }
+                    return [true, "", ""];
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Booking Form</h1>
+    <label for="datepicker">Select a date:</label>
+    <input id="datepicker" name="booking-date" type="text" placeholder="Select a date" required>
+
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoTFrc4CNJnT9QjJT_viexHQLYcFEpFJG-2TMKjoSW33DTgw/viewform?embedded=true" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+</body>
+</html>
